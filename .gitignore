@@ -8,6 +8,7 @@ venv/
 .env/
 
 # Logs and reports
+log/
 logs/
 reports/allure-results/
 

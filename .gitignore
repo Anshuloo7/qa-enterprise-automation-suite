@@ -10,7 +10,7 @@ venv/
 # Logs and reports
 log/
 logs/
-reports/allure-results/
+reports/
 
 # PyCharm settings
 .idea/

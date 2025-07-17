@@ -1,0 +1,18 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environment
+venv/
+.env/
+
+# Reports and logs
+reports/
+*.log
+
+# PyCharm settings
+.idea/
+
+# OS files
+.DS_Store

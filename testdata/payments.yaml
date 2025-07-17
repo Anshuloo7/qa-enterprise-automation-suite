@@ -1,0 +1,7 @@
+valid_payment:
+  amount: 100
+  currency: "USD"
+
+invalid_payment:
+  amount: 0
+  currency: "USD"

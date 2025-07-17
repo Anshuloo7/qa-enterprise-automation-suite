@@ -1,0 +1,36 @@
+{
+  "consumer": {
+    "name": "QA_Automation_Consumer"
+  },
+  "provider": {
+    "name": "ProductService"
+  },
+  "interactions": [
+    {
+      "description": "a request for all products",
+      "providerState": "Products exist",
+      "request": {
+        "method": "get",
+        "path": "/products"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+        },
+        "body": [
+          {
+            "id": 1,
+            "title": "Test Product",
+            "price": 19.99,
+            "category": "electronics"
+          }
+        ]
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  }
+}

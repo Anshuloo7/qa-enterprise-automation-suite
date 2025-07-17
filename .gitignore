@@ -10,9 +10,12 @@ venv/
 # Reports and logs
 reports/
 *.log
+logs/*
 
 # PyCharm settings
 .idea/
 
 # OS files
 .DS_Store
+
+

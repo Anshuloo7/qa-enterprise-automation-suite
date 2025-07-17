@@ -50,3 +50,30 @@ jobs:
         with:
           name: html-report
           path: reports/html
+
+  deploy-report:
+    needs: test
+    if: ${{ success() }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout gh-pages branch
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+
+      - name: Download HTML report artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: html-report
+          path: ./reports
+
+      - name: Deploy report to GitHub Pages
+        run: |
+          cp ./reports/report.html index.html
+          touch .nojekyll
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          git add index.html .nojekyll
+          git commit -m "Update test report"
+          git push origin gh-pages

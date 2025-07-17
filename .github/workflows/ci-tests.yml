@@ -21,9 +21,9 @@ jobs:
 
       - name: Build and Run Tests with Docker Compose
         run: |
-          docker-compose down -v
-          docker-compose up --build --abort-on-container-exit
-          docker-compose ps
+          docker compose down -v
+          docker compose up --build --abort-on-container-exit
+          docker compose ps
 
       - name: Upload HTML Report
         if: always()

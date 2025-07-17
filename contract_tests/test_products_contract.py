@@ -3,7 +3,11 @@ import requests
 from pact import Consumer, Provider
 
 # Pact mock service will run locally
-pact = Consumer('QA_Automation_Consumer').has_pact_with(Provider('ProductService'))
+pact = Consumer('QA_Automation_Consumer').has_pact_with(
+    Provider('ProductService'),
+    pact_dir='contracts/pacts',   # Save pact JSON here
+    log_dir='logs'                # Save logs here
+)
 pact.start_service()
 atexit.register(pact.stop_service)
 

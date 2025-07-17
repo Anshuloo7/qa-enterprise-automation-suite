@@ -7,6 +7,30 @@
   },
   "interactions": [
     {
+      "description": "a request to create a product",
+      "providerState": "Product can be created",
+      "request": {
+        "method": "post",
+        "path": "/products",
+        "body": {
+          "title": "Test Product",
+          "price": 29.99,
+          "category": "electronics"
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": {
+        },
+        "body": {
+          "id": 101,
+          "title": "Test Product",
+          "price": 29.99,
+          "category": "electronics"
+        }
+      }
+    },
+    {
       "description": "a request for all products",
       "providerState": "Products exist",
       "request": {

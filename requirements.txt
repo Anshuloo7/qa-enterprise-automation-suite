@@ -1,5 +1,8 @@
+allure-behave==2.14.3
+allure-python-commons==2.14.3
 annotated-types==0.7.0
 anyio==4.9.0
+attrs==25.3.0
 behave==1.2.6
 certifi==2025.7.14
 cffi==1.17.1

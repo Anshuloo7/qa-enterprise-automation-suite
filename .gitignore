@@ -7,15 +7,12 @@ __pycache__/
 venv/
 .env/
 
-# Reports and logs
-reports/
-*.log
-logs/*
+# Logs and reports
+logs/
+reports/allure-results/
 
 # PyCharm settings
 .idea/
 
 # OS files
 .DS_Store
-
-

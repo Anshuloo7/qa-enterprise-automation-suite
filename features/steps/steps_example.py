@@ -6,7 +6,8 @@ def step_given_behave_installed(context):
 
 @when("I run the tests")
 def step_when_run_tests(context):
-    print("Running Behave tests...")
+    base_url = context.env_config["base_url"]
+    print(f"Running tests against: {base_url}")
 
 @then("I should see the tests pass")
 def step_then_tests_pass(context):

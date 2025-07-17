@@ -1,11 +1,11 @@
-import requests
 from behave import when, then
+from utils.api_client import make_request
 
 @when("I fetch the list of products")
 def step_when_fetch_products(context):
     base_url = context.env_config["base_url"]
     endpoint = "/products"
-    context.response = requests.get(f"{base_url}{endpoint}")
+    context.response = make_request(context, "get", f"{base_url}{endpoint}")
 
 @then("I should receive a successful response")
 def step_then_successful_response(context):
@@ -41,7 +41,7 @@ def step_when_add_product(context):
     data = context.table[0].as_dict()
     data["price"] = float(data["price"])  # Ensure price is numeric
 
-    context.response = requests.post(f"{base_url}{endpoint}", json=data)
+    context.response = make_request(context, "post", f"{base_url}{endpoint}", json=data)
     context.posted_product = data
 
 @then("the response should include the product details")
@@ -49,10 +49,5 @@ def step_then_response_includes_details(context):
     json_response = context.response.json()
 
     for key, value in context.posted_product.items():
-        assert str(json_response.get(key)) == str(value), f"Expected {key} to be {value}, got {json_response.get(key)}"
-
-
-
-
-
-
+        assert str(json_response.get(key)) == str(value), \
+            f"Expected {key} to be {value}, got {json_response.get(key)}"

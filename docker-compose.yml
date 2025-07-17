@@ -4,3 +4,14 @@ services:
     build: ./mocks
     ports:
       - "8000:8000"
+
+  automation-tests:
+    build: .
+    container_name: qa-automation
+    depends_on:
+      - mock-payment-service
+    volumes:
+      - ./reports:/app/reports
+    environment:
+      - ENV=qa
+      - PAYMENT_URL=http://mock-payment-service:8000/process-payment

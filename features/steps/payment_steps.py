@@ -1,10 +1,12 @@
+import os
+
 from behave import when, then
 from utils.api_client import make_request
 
 
 @when('I send a payment request with "{data_key}" data')
 def step_when_payment(context, data_key):
-    url = context.env_config["mocks"]["payment"]
+    url = os.getenv("PAYMENT_URL", context.env_config["mocks"]["payment"])
     payment_data = context.test_data["payments"][data_key]
 
     # Use centralized request function for logging

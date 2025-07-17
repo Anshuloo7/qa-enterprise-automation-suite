@@ -5,8 +5,3 @@ environments:
     base_url: "https://fakestoreapi.com"
     mocks:
       payment: "http://127.0.0.1:8000/process-payment"
-
-  staging:
-    base_url: "https://staging.fakestoreapi.com"
-    mocks:
-      payment: "http://staging-mock:8000/process-payment"

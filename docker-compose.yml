@@ -1,0 +1,6 @@
+version: '3.9'
+services:
+  mock-payment-service:
+    build: ./mocks
+    ports:
+      - "8000:8000"

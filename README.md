@@ -1,93 +1,117 @@
 # QA Enterprise Automation Suite
 
-![Python](https://img.shields.io/badge/python-3.x-blue.svg)
-![Behave](https://img.shields.io/badge/BDD-Behave-green)
-![API](https://img.shields.io/badge/API-Testing-orange)
+---
+
+## Project Overview
+
+Automation suite for API testing and service virtualization using **Behave**, **FastAPI**, and **Docker**.
 
 ---
 
-## ✅ Project Overview
+## Features
 
-An **enterprise-grade automation suite** demonstrating best practices for **multi-layer testing**:
-
-* UI + API + DB validation
-* Service virtualization & contract testing
-* Performance and CI/CD integration
-
-This project is designed for **SDET roles**, showcasing capabilities beyond simple test automation, including **test architecture, scalability, and environment strategy**.
+* API Testing with Behave (GET & POST scenarios)
+* Config-driven environments (QA/Staging)
+* Mock Payment Service using FastAPI
+* Positive & Negative scenarios for payment
+* Dockerized mock service for consistent execution
 
 ---
 
-## ✅ Current Features (Stage 2)
-
-✔ **Environment-driven config** using YAML (QA/Staging)
-✔ **BDD Framework** with Behave
-✔ **API Testing**:
-
-* `GET /products` → Validate list of products
-* `POST /products` → Create a new product and verify details
-
----
-
-## ✅ Tech Stack
-
-* **Language:** Python 3.x
-* **Framework:** Behave (BDD)
-* **API Testing:** Requests
-* **Config Management:** YAML + Hooks
-* **Future Add-ons:** Pact (Contract Testing), FastAPI (Mocks), Locust (Performance)
-
----
-
-## ✅ Project Structure
+## Project Structure
 
 ```
 qa-enterprise-automation-suite/
 ├── features/
 │   ├── api.feature
+│   ├── payment.feature
 │   ├── environment.py
 │   └── steps/
-│       └── api_steps.py
+│       ├── api_steps.py
+│       └── payment_steps.py
+├── mocks/
+│   ├── payment_service.py
+│   └── Dockerfile
 ├── config/
 │   └── config.yaml
+├── testdata/
+│   └── payments.yaml
 ├── utils/
-│   └── config_loader.py
+│   ├── config_loader.py
+│   └── data_loader.py
+├── docker-compose.yml
 ├── requirements.txt
 └── README.md
 ```
 
 ---
 
-## ✅ How to Run
+## How to Run
 
-1. **Clone the repository**
+### 1. Clone the repository
 
 ```bash
 git clone git@github.com:Anshuloo7/qa-enterprise-automation-suite.git
 cd qa-enterprise-automation-suite
 ```
 
-2. **Create Virtual Environment**
+### 2. Create Virtual Environment
 
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-3. **Install Dependencies**
+### 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-4. **Run Tests**
+### 4. Run API Tests
 
 ```bash
 behave features/api.feature
 ```
 
-✅ To run in a different environment:
+To run in a different environment:
 
 ```bash
 behave features/api.feature --define env=staging
+```
+
+---
+
+## Run Mock Service with Docker
+
+Start the mock service:
+
+```bash
+docker compose up --build -d
+```
+
+Verify service:
+
+```bash
+curl -X POST http://127.0.0.1:8000/process-payment \
+-H "Content-Type: application/json" \
+-d '{"amount": 100, "currency": "USD"}'
+```
+
+Expected:
+
+```json
+{"status":"success","message":"Payment processed successfully"}
+```
+
+Run payment scenarios:
+
+```bash
+behave features/payment.feature
+```
+
+Stop the mock service:
+
+```bash
+docker compose down
 ```

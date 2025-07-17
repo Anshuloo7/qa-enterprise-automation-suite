@@ -3,12 +3,10 @@ default: qa
 environments:
   qa:
     base_url: "https://fakestoreapi.com"
-    db_host: "localhost"
-    db_user: "qa_user"
-    db_pass: "qa_password"
+    mocks:
+      payment: "http://127.0.0.1:8000/process-payment"
 
   staging:
     base_url: "https://staging.fakestoreapi.com"
-    db_host: "staging-db"
-    db_user: "staging_user"
-    db_pass: "staging_password"
+    mocks:
+      payment: "http://staging-mock:8000/process-payment"

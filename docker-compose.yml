@@ -16,3 +16,9 @@ services:
     environment:
       - ENV=qa
       - PAYMENT_URL=http://mock-payment-service:8000/process-payment
+    entrypoint: ["behave"]
+    command:
+      [ # Add --tags=@ui or @api for tag based
+        "--format", "behave_html_formatter:HTMLFormatter", "--outfile", "reports/html/report.html", "--format", "allure_behave.formatter:AllureFormatter", "--outfile", "reports/allure-results", "--junit", "--junit-directory", "reports/junit"
+      ]
+

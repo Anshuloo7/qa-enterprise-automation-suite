@@ -1,7 +1,4 @@
-from time import sleep
-
 from behave import given, when, then
-
 from pages.admin_page import AdminPage
 from utils.selenium_utils import DriverFactory
 from pages.login_page import LoginPage
@@ -26,9 +23,7 @@ def step_verify_dashboard(context):
 def step_search_user(context, username):
     context.admin_page.go_to_admin()
     context.admin_page.search_user(username)
-    sleep(1)
 
 @then('I should see user "{username}" in the search results')
 def step_validate_user(context, username):
     assert context.admin_page.is_user_present_in_results(username), f"User {username} not found in results"
-    sleep(1)

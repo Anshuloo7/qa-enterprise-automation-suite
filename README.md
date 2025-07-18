@@ -1,117 +1,160 @@
 # QA Enterprise Automation Suite
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+![Behave](https://img.shields.io/badge/BDD-Behave-green)
+![Docker](https://img.shields.io/badge/Containerized-Docker-blue)
+![GitHub Actions](https://img.shields.io/badge/CI-CD-yellow)
+## **Overview**
+
+The **QA Enterprise Automation Suite** is a robust, scalable automation framework built using **Python + Behave (BDD)**, integrated with **Docker** and **GitHub Actions** for CI/CD. It supports:
+
+* **UI + API Testing**
+* **Mocked Services** for isolated testing
+* **Detailed HTML and Allure Reports**
+* **Dynamic Logging with Full Request/Response Tracing**
+
+This solution is designed for **enterprise-grade test automation** with full CI/CD integration, environment configuration, and artifact management.
 
 ---
 
-## Project Overview
+## **Key Features**
 
-Automation suite for API testing and service virtualization using **Behave**, **FastAPI**, and **Docker**.
+✅ **BDD with Behave** – Human-readable scenarios for better collaboration.
+
+✅ **API & UI Validation** – Multi-layer testing with reusable steps.
+
+✅ **Mock Services** – Custom mock server for external dependencies.
+
+✅ **Advanced Logging** – Captures:
+
+* Request & Response Details
+* Headers, Status Codes, and Payload
+* Full Error Tracebacks for failures
+
+✅ **Reporting** –
+
+* **Behave HTML Report**
+* **JUnit XML** (CI Integration)
+* **Allure Report with Attachments**
+
+✅ **Dockerized Execution** – Consistent environment across local and CI.
+
+✅ **CI/CD Integration** – GitHub Actions pipeline with artifact uploads & GitHub Pages deployment.
 
 ---
 
-## Features
+## **Tech Stack**
 
-* API Testing with Behave (GET & POST scenarios)
-* Config-driven environments (QA/Staging)
-* Mock Payment Service using FastAPI
-* Positive & Negative scenarios for payment
-* Dockerized mock service for consistent execution
+* **Language:** Python 3.11
+* **Framework:** Behave (BDD)
+* **Reports:** Behave HTML Formatter, Allure
+* **Containerization:** Docker, Docker Compose
+* **CI/CD:** GitHub Actions
 
 ---
 
-## Project Structure
+## **Project Structure**
 
 ```
 qa-enterprise-automation-suite/
-├── features/
-│   ├── api.feature
-│   ├── payment.feature
-│   ├── environment.py
-│   └── steps/
-│       ├── api_steps.py
-│       └── payment_steps.py
-├── mocks/
-│   ├── payment_service.py
+│
+├── features/                 # BDD Feature files
+│   ├── steps/                # Step Definitions
+│   └── api.feature           # API Test Scenarios
+│
+├── mocks/                    # Mock Payment Service (FastAPI)
 │   └── Dockerfile
-├── config/
-│   └── config.yaml
-├── testdata/
-│   └── payments.yaml
-├── utils/
+│
+├── utils/                    # Helpers (logging, config, retry)
+│   ├── logger_setup.py
 │   ├── config_loader.py
-│   └── data_loader.py
-├── docker-compose.yml
-├── requirements.txt
+│   └── retry.py
+│
+├── reports/                  # Test Reports (HTML, Allure)
+│
+├── Dockerfile                # Automation container build
+├── docker-compose.yml        # Service orchestration
+├── requirements.txt          # Python dependencies
 └── README.md
 ```
 
 ---
 
-## How to Run
+## **Getting Started**
 
-### 1. Clone the repository
+### **1. Clone the Repository**
 
 ```bash
-git clone git@github.com:Anshuloo7/qa-enterprise-automation-suite.git
+git clone https://github.com/your-username/qa-enterprise-automation-suite.git
 cd qa-enterprise-automation-suite
 ```
 
-### 2. Create Virtual Environment
+### **2. Run with Docker**
 
 ```bash
-python3 -m venv venv
-source venv/bin/activate
+docker compose down -v
+docker compose up --build --abort-on-container-exit
 ```
 
-### 3. Install Dependencies
+Reports will be generated under `reports/html` and `reports/allure-results`.
+
+---
+
+## **Reporting**
+
+### **HTML Report**
+
+Located at: `reports/html/report.html`
+
+### **Allure Report**
+
+Generate Allure Report locally:
 
 ```bash
-pip install -r requirements.txt
-```
-
-### 4. Run API Tests
-
-```bash
-behave features/api.feature
-```
-
-To run in a different environment:
-
-```bash
-behave features/api.feature --define env=staging
+allure serve reports/allure-results
 ```
 
 ---
 
-## Run Mock Service with Docker
+## **CI/CD Workflow**
 
-Start the mock service:
+* **Pipeline File:** `.github/workflows/ci.yml`
+* **Steps:**
 
-```bash
-docker compose up --build -d
-```
+  * Build & Run Tests in Docker
+  * Upload HTML & Allure Reports as artifacts
+  * Deploy HTML Report to **GitHub Pages**
 
-Verify service:
+Reports can be accessed via the **gh-pages** branch URL.
 
-```bash
-curl -X POST http://127.0.0.1:8000/process-payment \
--H "Content-Type: application/json" \
--d '{"amount": 100, "currency": "USD"}'
-```
+---
 
-Expected:
+## **Environment Variables**
 
-```json
-{"status":"success","message":"Payment processed successfully"}
-```
+* `ENV` – Target environment (e.g., qa)
+* `PAYMENT_URL` – Mock Payment Service endpoint
 
-Run payment scenarios:
+---
 
-```bash
-behave features/payment.feature
-```
+## **Key Commands**
 
-Stop the mock service:
+### **Run Behave Tests with Reports**
 
 ```bash
-docker compose down
+behave \
+  --junit --junit-directory=reports/junit \
+  --format behave_html_formatter:HTMLFormatter --outfile reports/html/report.html \
+  --format allure_behave.formatter:AllureFormatter --outfile reports/allure-results
 ```
+
+---
+
+## **Future Enhancements**
+
+* ✅ Allure Report Hosting on GitHub Pages
+* ✅ Add Docker support for Allure Serve
+* ✅ Integration with Slack for notifications
+* ✅ Add UI Test Scenarios using Selenium/Playwright
+
+
+
+

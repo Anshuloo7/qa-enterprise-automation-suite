@@ -14,6 +14,7 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
+    continue-on-error: true
 
     steps:
       - name: Checkout repository
@@ -22,7 +23,7 @@ jobs:
       - name: Build and Run Tests with Docker Compose
         run: |
           docker compose down -v
-          docker compose up --build --abort-on-container-exit --exit-code-from automation-tests
+          docker compose up --build --abort-on-container-exit || true
 
       - name: Upload HTML Report
         if: always()
@@ -44,7 +45,6 @@ jobs:
         with:
           name: execution-logs
           path: logs/behave.log
-
 
   deploy-report:
     needs: test

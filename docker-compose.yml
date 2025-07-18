@@ -12,6 +12,7 @@ services:
       - mock-payment-service
     volumes:
       - ./reports:/app/reports
+      - ./logs:/app/logs
     environment:
       - ENV=qa
       - PAYMENT_URL=http://mock-payment-service:8000/process-payment

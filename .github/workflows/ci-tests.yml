@@ -22,13 +22,11 @@ jobs:
       - name: Build and Run Tests with Docker Compose
         run: |
           docker compose down -v
-          docker compose up --build -d   #Run in detached mode
-          sleep 10                       #Give time for services to start
-          docker compose logs automation-tests
+          docker compose up --build   # Not detached anymore; run until tests finish
 
-      - name: Debug External API
+      - name: Debug External API from Runner
         run: |
-          docker compose exec automation-tests curl -I https://fakestoreapi.com/products || echo "External API not reachable"
+          curl -I https://fakestoreapi.com/products || echo "External API not reachable"
 
       - name: Upload HTML Report
         if: always()
@@ -36,10 +34,6 @@ jobs:
         with:
           name: html-report
           path: reports/html
-
-      - name: Stop Containers
-        if: always()
-        run: docker compose down -v
 
   deploy-report:
     needs: test

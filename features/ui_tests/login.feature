@@ -1,3 +1,4 @@
+@ui
 Feature: OrangeHRM Login
 
   Scenario: Login with valid credentials

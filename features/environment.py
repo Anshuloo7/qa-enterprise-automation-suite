@@ -4,7 +4,12 @@ from utils.data_loader import load_test_data
 from utils.logger_setup import setup_logger
 from allure_commons._allure import attach
 from allure_commons.types import AttachmentType
+from utils.selenium_utils import DriverFactory
 import traceback
+
+# Ensure screenshot directory exists
+SCREENSHOT_DIR = os.path.join(os.path.dirname(__file__), "..", "screenshots")
+os.makedirs(SCREENSHOT_DIR, exist_ok=True)
 
 def before_all(context):
     context.logger = setup_logger()
@@ -17,6 +22,11 @@ def before_all(context):
 def before_scenario(context, scenario):
     context.test_data = {"payments": load_test_data("payments.yaml")}
     context.logger.info(f"Starting scenario: {scenario.name}")
+
+    # Initialize Selenium driver for @ui tagged scenarios
+    if "ui" in scenario.effective_tags:
+        context.driver = DriverFactory.get_driver()
+        context.logger.info("Selenium WebDriver initialized for UI test")
 
 def before_step(context, step):
     context.logger.info(f"STEP START: {step.keyword} {step.name}")
@@ -36,6 +46,16 @@ def after_scenario(context, scenario):
         with open(log_path, "r") as log_file:
             attach(log_file.read(), name="Execution Log", attachment_type=AttachmentType.TEXT)
 
+    # UI-specific failure handling
+    if scenario.status == "failed" and "ui" in scenario.effective_tags:
+        screenshot_path = os.path.join(SCREENSHOT_DIR, f"{scenario.name}.png")
+        try:
+            context.driver.save_screenshot(screenshot_path)
+            attach.file(screenshot_path, name="UI Failure Screenshot", attachment_type=AttachmentType.PNG)
+            context.logger.info(f"Screenshot captured: {screenshot_path}")
+        except Exception as e:
+            context.logger.error(f"Failed to capture screenshot: {e}")
+
     # Attach detailed failure info
     if scenario.status == "failed":
         # Attach step-level error
@@ -45,7 +65,7 @@ def after_scenario(context, scenario):
                    name="Step Failure Details",
                    attachment_type=AttachmentType.TEXT)
 
-        # Attach API request & response details
+        # Attach API request & response details (if any)
         if hasattr(context, "response"):
             try:
                 attach(
@@ -60,6 +80,11 @@ def after_scenario(context, scenario):
                 )
             except Exception as e:
                 context.logger.error(f"Failed to attach API details: {e}")
+
+    # Quit driver for UI tests
+    if "ui" in scenario.effective_tags:
+        DriverFactory.quit_driver()
+        context.logger.info("Selenium WebDriver closed after UI test")
 
 def after_all(context):
     context.logger.info("=== Test Execution Completed ===")

@@ -22,11 +22,7 @@ jobs:
       - name: Build and Run Tests with Docker Compose
         run: |
           docker compose down -v
-          docker compose up --build   # Not detached anymore; run until tests finish
-
-      - name: Debug External API from Runner
-        run: |
-          curl -I https://fakestoreapi.com/products || echo "External API not reachable"
+          docker compose up --build --abort-on-container-exit --exit-code-from automation-tests
 
       - name: Upload HTML Report
         if: always()
@@ -34,6 +30,21 @@ jobs:
         with:
           name: html-report
           path: reports/html
+
+      - name: Upload Allure Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: reports/allure-results
+
+      - name: Upload Execution Logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: execution-logs
+          path: logs/behave.log
+
 
   deploy-report:
     needs: test

@@ -20,4 +20,4 @@ RUN pip install behave-html-formatter allure-behave
 COPY . .
 
 # Set default command to run Behave with HTML + JUnit report
-ENTRYPOINT ["behave", "--junit", "--junit-directory=reports/junit", "--format", "behave_html_formatter:HTMLFormatter", "--outfile", "reports/html/report.html"]
+ENTRYPOINT ["behave", "--junit", "--junit-directory=reports/junit", "--format", "behave_html_formatter:HTMLFormatter", "--outfile", "reports/html/report.html", "--format", "allure_behave.formatter:AllureFormatter", "--outfile", "reports/allure-results"]

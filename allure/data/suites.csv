@@ -1,0 +1,7 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Fri Jul 18 22:40:02 UTC 2025","Fri Jul 18 22:40:05 UTC 2025","2945","","","","","","Login with valid credentials",""
+"passed","Fri Jul 18 22:40:05 UTC 2025","Fri Jul 18 22:40:09 UTC 2025","4429","","","","","","Search for an existing user",""
+"failed","Fri Jul 18 22:39:54 UTC 2025","Fri Jul 18 22:39:58 UTC 2025","4097","","","","","","Fetch all available products and validate DB",""
+"failed","Fri Jul 18 22:39:58 UTC 2025","Fri Jul 18 22:40:02 UTC 2025","4057","","","","","","Create a new product and validate DB",""
+"passed","Fri Jul 18 22:40:02 UTC 2025","Fri Jul 18 22:40:02 UTC 2025","5","","","","","","Process an invalid payment",""
+"passed","Fri Jul 18 22:40:02 UTC 2025","Fri Jul 18 22:40:02 UTC 2025","10","","","","","","Process a valid payment",""

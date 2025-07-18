@@ -1,0 +1,14 @@
+REQUEST:
+POST http://mock-payment-service:8000/process-payment
+Headers: {}
+Query Params: {}
+Body: {
+  "amount": 0,
+  "currency": "USD"
+}
+
+RESPONSE:
+Status: 200
+Time: 0.0s
+Headers: {'date': 'Fri, 18 Jul 2025 22:40:02 GMT', 'server': 'uvicorn', 'content-length': '46', 'content-type': 'application/json'}
+Body: {"status":"failed","message":"Invalid amount"}

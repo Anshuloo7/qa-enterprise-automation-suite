@@ -1,44 +1,29 @@
 # QA Enterprise Automation Suite
-![Python](https://img.shields.io/badge/Python-3.11-blue)
-![Behave](https://img.shields.io/badge/BDD-Behave-green)
-![Docker](https://img.shields.io/badge/Containerized-Docker-blue)
-![GitHub Actions](https://img.shields.io/badge/CI-CD-yellow)
+
 ## **Overview**
 
-The **QA Enterprise Automation Suite** is a robust, scalable automation framework built using **Python + Behave (BDD)**, integrated with **Docker** and **GitHub Actions** for CI/CD. It supports:
+A **comprehensive enterprise-grade automation framework** combining **API Testing**, **UI Testing**, and **Contract Testing** in one solution. Built with **Python + Behave (BDD)**, fully **Dockerized**, and integrated into **GitHub Actions** for CI/CD pipelines.
 
-* **UI + API Testing**
-* **Mocked Services** for isolated testing
-* **Detailed HTML and Allure Reports**
-* **Dynamic Logging with Full Request/Response Tracing**
-
-This solution is designed for **enterprise-grade test automation** with full CI/CD integration, environment configuration, and artifact management.
+✨ **Live Reports:** [View Test Reports](https://anshuloo7.github.io/qa-enterprise-automation-suite/)
 
 ---
 
-## **Key Features**
+## ✅ **Key Differentiators**
 
-✅ **BDD with Behave** – Human-readable scenarios for better collaboration.
+* **Contract Testing with Pact** – Ensure microservice compatibility with consumer-driven contracts.
+* **Unified API + UI Testing** – Behave BDD + Selenium (POM design) for seamless multi-layer coverage.
+* **Mock Services** – FastAPI-powered mocks for isolated and reliable tests.
+* **Docker-Native Execution** – Run anywhere with consistent environments.
+* **Enterprise-Level Reporting** – Allure, HTML, and JUnit with screenshots and logs.
 
-✅ **API & UI Validation** – Multi-layer testing with reusable steps.
+---
 
-✅ **Mock Services** – Custom mock server for external dependencies.
+## **Core Features**
 
-✅ **Advanced Logging** – Captures:
-
-* Request & Response Details
-* Headers, Status Codes, and Payload
-* Full Error Tracebacks for failures
-
-✅ **Reporting** –
-
-* **Behave HTML Report**
-* **JUnit XML** (CI Integration)
-* **Allure Report with Attachments**
-
-✅ **Dockerized Execution** – Consistent environment across local and CI.
-
-✅ **CI/CD Integration** – GitHub Actions pipeline with artifact uploads & GitHub Pages deployment.
+* **BDD Test Scenarios:** Gherkin syntax for better collaboration.
+* **Multi-Layer Validation:** API, UI, and Contract Testing.
+* **Advanced Logging:** Full tracebacks, request-response capture.
+* **CI/CD Ready:** Automated Docker builds, report hosting, and artifact management.
 
 ---
 
@@ -46,115 +31,77 @@ This solution is designed for **enterprise-grade test automation** with full CI/
 
 * **Language:** Python 3.11
 * **Framework:** Behave (BDD)
-* **Reports:** Behave HTML Formatter, Allure
-* **Containerization:** Docker, Docker Compose
+* **UI Automation:** Selenium + Page Object Model
+* **Contract Testing:** Pact
+* **Reports:** Allure, Behave HTML, JUnit XML
+* **Containers:** Docker & Docker Compose
 * **CI/CD:** GitHub Actions
 
 ---
 
-## **Project Structure**
+## **Detailed Project Structure**
 
 ```
 qa-enterprise-automation-suite/
-│
-├── features/                 # BDD Feature files
-│   ├── steps/                # Step Definitions
-│   └── api.feature           # API Test Scenarios
-│
-├── mocks/                    # Mock Payment Service (FastAPI)
-│   └── Dockerfile
-│
-├── utils/                    # Helpers (logging, config, retry)
-│   ├── logger_setup.py
-│   ├── config_loader.py
-│   └── retry.py
-│
-├── reports/                  # Test Reports (HTML, Allure)
-│
-├── Dockerfile                # Automation container build
-├── docker-compose.yml        # Service orchestration
-├── requirements.txt          # Python dependencies
-└── README.md
+├── .github/workflows/         # CI/CD pipeline
+├── config/                    # Environment configs
+├── contract_tests/            # Pact contract test scripts
+├── contracts/pacts/           # Generated Pact contract files
+├── features/                  # BDD feature files & steps
+│   ├── api_tests/             # API scenarios
+│   ├── ui_tests/              # UI scenarios
+│   └── steps/                 # Step definitions
+├── mocks/                     # FastAPI-based mock payment service
+├── pages/                     # Selenium Page Object Model classes
+├── utils/                     # Logging, drivers, config loaders
+├── reports/                   # HTML & Allure reports
+├── testdata/                  # Test data files (YAML)
+├── Dockerfile                 # Automation container
+├── docker-compose.yml         # Orchestration for mocks + tests
+└── requirements.txt           # Python dependencies
 ```
 
 ---
 
-## **Getting Started**
+## **How to Run**
 
-### **1. Clone the Repository**
+### **1. Clone Repo**
 
 ```bash
-git clone https://github.com/your-username/qa-enterprise-automation-suite.git
+git clone https://github.com/Anshuloo7/qa-enterprise-automation-suite.git
 cd qa-enterprise-automation-suite
 ```
 
-### **2. Run with Docker**
+### **2. Run Tests in Docker**
 
 ```bash
 docker compose down -v
 docker compose up --build --abort-on-container-exit
 ```
 
-Reports will be generated under `reports/html` and `reports/allure-results`.
+Reports will be stored under `reports/`.
 
 ---
 
 ## **Reporting**
 
-### **HTML Report**
-
-Located at: `reports/html/report.html`
-
-### **Allure Report**
-
-Generate Allure Report locally:
+* **HTML Report:** `reports/html/report.html`
+* **Allure Report:** `reports/allure-results/`
 
 ```bash
 allure serve reports/allure-results
 ```
 
----
-
-## **CI/CD Workflow**
-
-* **Pipeline File:** `.github/workflows/ci.yml`
-* **Steps:**
-
-  * Build & Run Tests in Docker
-  * Upload HTML & Allure Reports as artifacts
-  * Deploy HTML Report to **GitHub Pages**
-
-Reports can be accessed via the **gh-pages** branch URL.
+✅ **Live Hosted Reports:** [GitHub Pages](https://anshuloo7.github.io/qa-enterprise-automation-suite/)
 
 ---
 
-## **Environment Variables**
+## **CI/CD Pipeline Highlights**
 
-* `ENV` – Target environment (e.g., qa)
-* `PAYMENT_URL` – Mock Payment Service endpoint
+* Full regression in Docker
+* Uploads JUnit, Allure, HTML reports as artifacts
+* Deploys HTML report to GitHub Pages
 
----
-
-## **Key Commands**
-
-### **Run Behave Tests with Reports**
-
-```bash
-behave \
-  --junit --junit-directory=reports/junit \
-  --format behave_html_formatter:HTMLFormatter --outfile reports/html/report.html \
-  --format allure_behave.formatter:AllureFormatter --outfile reports/allure-results
-```
+Pipeline file: `.github/workflows/ci-tests.yml`
 
 ---
-
-## **Future Enhancements**
-
-* ✅ Allure Report Hosting on GitHub Pages
-* ✅ Add Docker support for Allure Serve
-* ✅ Integration with Slack for notifications
-* ✅ Add UI Test Scenarios using Selenium/Playwright
-
-
-
-

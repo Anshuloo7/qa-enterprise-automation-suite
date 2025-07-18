@@ -57,12 +57,17 @@ jobs:
           export PATH="/tmp/allure-2.24.0/bin:$PATH"
           allure --version
 
+      - name: Fix permissions for reports directory
+        run: |
+          sudo chmod -R 777 reports
+
       # Generate Allure HTML Report
       - name: Generate Allure HTML Report
         run: |
           /tmp/allure-2.24.0/bin/allure generate reports/allure-results --clean -o reports/allure-html
-
-      # Upload Allure HTML as Artifact
+          
+          
+          # Upload Allure HTML as Artifact
       - name: Upload Allure HTML Report
         if: always()
         uses: actions/upload-artifact@v4

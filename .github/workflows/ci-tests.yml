@@ -25,6 +25,7 @@ jobs:
           docker compose down -v
           docker compose up --build --abort-on-container-exit || true
 
+      # Upload Behave HTML Report for download
       - name: Upload HTML Report
         if: always()
         uses: actions/upload-artifact@v4
@@ -32,6 +33,7 @@ jobs:
           name: html-report
           path: reports/html
 
+      # Upload Allure Results for generating HTML
       - name: Upload Allure Results
         if: always()
         uses: actions/upload-artifact@v4
@@ -39,12 +41,34 @@ jobs:
           name: allure-results
           path: reports/allure-results
 
+      # Upload Logs
       - name: Upload Execution Logs
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: execution-logs
           path: logs/behave.log
+
+      # Install Allure CLI
+      - name: Install Allure CLI
+        run: |
+          curl -Ls https://github.com/allure-framework/allure2/releases/download/2.24.0/allure-2.24.0.zip -o allure.zip
+          unzip allure.zip -d /tmp
+          export PATH="/tmp/allure-2.24.0/bin:$PATH"
+          allure --version
+
+      # Generate Allure HTML Report
+      - name: Generate Allure HTML Report
+        run: |
+          /tmp/allure-2.24.0/bin/allure generate reports/allure-results --clean -o reports/allure-html
+
+      # Upload Allure HTML as Artifact
+      - name: Upload Allure HTML Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-html
+          path: reports/allure-html
 
   deploy-report:
     needs: test
@@ -58,18 +82,36 @@ jobs:
           ref: gh-pages
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Download HTML report artifact
+      # Download Behave HTML artifact
+      - name: Download HTML Report artifact
         uses: actions/download-artifact@v4
         with:
           name: html-report
           path: ./reports
 
-      - name: Deploy report to GitHub Pages
+      # Download Allure HTML artifact
+      - name: Download Allure HTML artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-html
+          path: ./reports/allure-html
+
+      # Deploy both reports to GitHub Pages
+      - name: Deploy reports to GitHub Pages
         run: |
+          # Copy Behave HTML report as index.html
           cp ./reports/report.html index.html
+
+          # Create allure subdirectory and copy Allure report
+          mkdir -p allure
+          cp -r ./reports/allure-html/* ./allure/
+
+          # Add .nojekyll to avoid GitHub Pages processing
           touch .nojekyll
+
+          # Commit and push changes
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
-          git add index.html .nojekyll
-          git commit -m "Update test report" || echo "No changes to commit"
+          git add index.html allure .nojekyll
+          git commit -m "Update reports (HTML + Allure)" || echo "No changes to commit"
           git push origin gh-pages

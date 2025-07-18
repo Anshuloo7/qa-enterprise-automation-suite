@@ -4,7 +4,7 @@
 
 A **comprehensive enterprise-grade automation framework** combining **API Testing**, **UI Testing**, **Contract Testing**, and **Database Validation** in one solution. Built with **Python + Behave (BDD)**, fully **Dockerized**, and integrated into **GitHub Actions** for CI/CD pipelines.
 
-✨ **Live Reports:** [View Test Reports](https://anshuloo7.github.io/qa-enterprise-automation-suite/)
+✨ **Live Reports:** [HTML Report](https://anshuloo7.github.io/qa-enterprise-automation-suite/) | [Allure Report](https://anshuloo7.github.io/qa-enterprise-automation-suite/allure/)
 
 ---
 
@@ -95,7 +95,7 @@ Reports will be stored under `reports/`.
 allure serve reports/allure-results
 ```
 
-✅ **Live Hosted Reports:** [GitHub Pages](https://anshuloo7.github.io/qa-enterprise-automation-suite/)
+✅ **Live Hosted Reports:** [HTML Report](https://anshuloo7.github.io/qa-enterprise-automation-suite/) | [Allure Report](https://anshuloo7.github.io/qa-enterprise-automation-suite/allure/)
 
 ---
 
@@ -103,6 +103,6 @@ allure serve reports/allure-results
 
 * Full regression in Docker
 * Uploads JUnit, Allure, HTML reports as artifacts
-* Deploys HTML report to GitHub Pages
+* Deploys HTML & Allure reports to GitHub Pages
 
 Pipeline file: `.github/workflows/ci-tests.yml`

@@ -2,7 +2,7 @@
 
 ## **Overview**
 
-A **comprehensive enterprise-grade automation framework** combining **API Testing**, **UI Testing**, and **Contract Testing** in one solution. Built with **Python + Behave (BDD)**, fully **Dockerized**, and integrated into **GitHub Actions** for CI/CD pipelines.
+A **comprehensive enterprise-grade automation framework** combining **API Testing**, **UI Testing**, **Contract Testing**, and **Database Validation** in one solution. Built with **Python + Behave (BDD)**, fully **Dockerized**, and integrated into **GitHub Actions** for CI/CD pipelines.
 
 ✨ **Live Reports:** [View Test Reports](https://anshuloo7.github.io/qa-enterprise-automation-suite/)
 
@@ -10,6 +10,7 @@ A **comprehensive enterprise-grade automation framework** combining **API Testin
 
 ## ✅ **Key Differentiators**
 
+* **Database Validation (SQLite)** – Verify API transactions with persistent DB checks.
 * **Contract Testing with Pact** – Ensure microservice compatibility with consumer-driven contracts.
 * **Unified API + UI Testing** – Behave BDD + Selenium (POM design) for seamless multi-layer coverage.
 * **Mock Services** – FastAPI-powered mocks for isolated and reliable tests.
@@ -21,7 +22,7 @@ A **comprehensive enterprise-grade automation framework** combining **API Testin
 ## **Core Features**
 
 * **BDD Test Scenarios:** Gherkin syntax for better collaboration.
-* **Multi-Layer Validation:** API, UI, and Contract Testing.
+* **Multi-Layer Validation:** API, UI, Contract Testing, and DB checks.
 * **Advanced Logging:** Full tracebacks, request-response capture.
 * **CI/CD Ready:** Automated Docker builds, report hosting, and artifact management.
 
@@ -33,6 +34,7 @@ A **comprehensive enterprise-grade automation framework** combining **API Testin
 * **Framework:** Behave (BDD)
 * **UI Automation:** Selenium + Page Object Model
 * **Contract Testing:** Pact
+* **Database:** SQLite for validation
 * **Reports:** Allure, Behave HTML, JUnit XML
 * **Containers:** Docker & Docker Compose
 * **CI/CD:** GitHub Actions
@@ -47,6 +49,7 @@ qa-enterprise-automation-suite/
 ├── config/                    # Environment configs
 ├── contract_tests/            # Pact contract test scripts
 ├── contracts/pacts/           # Generated Pact contract files
+├── db/                        # SQLite database for validations
 ├── features/                  # BDD feature files & steps
 │   ├── api_tests/             # API scenarios
 │   ├── ui_tests/              # UI scenarios
@@ -103,5 +106,3 @@ allure serve reports/allure-results
 * Deploys HTML report to GitHub Pages
 
 Pipeline file: `.github/workflows/ci-tests.yml`
-
----

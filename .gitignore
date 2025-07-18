@@ -17,3 +17,7 @@ reports/
 
 # OS files
 .DS_Store
+
+#ignore local db files
+.sqlite
+db/

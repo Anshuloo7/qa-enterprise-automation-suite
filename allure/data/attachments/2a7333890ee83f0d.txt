@@ -1,0 +1,14 @@
+REQUEST:
+POST http://mock-payment-service:8000/process-payment
+Headers: {}
+Query Params: {}
+Body: {
+  "amount": 100,
+  "currency": "USD"
+}
+
+RESPONSE:
+Status: 200
+Time: 0.01s
+Headers: {'date': 'Fri, 18 Jul 2025 22:48:37 GMT', 'server': 'uvicorn', 'content-length': '63', 'content-type': 'application/json'}
+Body: {"status":"success","message":"Payment processed successfully"}
